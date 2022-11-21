@@ -1,3 +1,4 @@
+#include "defs.h"
 #include <stdio.h>
 #include <stdarg.h>
 

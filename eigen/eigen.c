@@ -7,12 +7,14 @@
 static void set_T(number T[N][N]);
 static void engin_qri(void);
 static void engin_qrig(void);
+static void engin_jcbi(void);
 
 int main(void)
 {
   logging_stream = stdout;
   engin_qri();
   engin_qrig();
+  engin_jcbi();
   return 0;
 }
 
@@ -32,7 +34,7 @@ static void set_T(number T[N][N])
 
 static void engin_qri(void)
 {
-  number T[N][N], e = 1e-7;
+  number T[N][N], e = 1e-10;
   int t0 = 1000, t, i, j;
 
   set_T(T);
@@ -48,11 +50,27 @@ static void engin_qri(void)
 
 static void engin_qrig(void)
 {
-  number T[N][N], e = 1e-7;
+  number T[N][N], e = 1e-10;
   int t0 = 1000, t, i, j;
 
   set_T(T);
   t = qrig(N, T, &e, t0);
+  fprintf(stderr, "%s-%d:\n", __func__, t);
+  for(i = 0; i < N; ++i)
+  {
+    for(j = 0; j < N; ++j)
+      fprintf(stderr, "%16lg", (double)T[i][j]);
+    fprintf(stderr, "\n");
+  }
+}
+
+static void engin_jcbi(void)
+{
+  number T[N][N], e = 1e-10;
+  int t0 = 1000, t, i, j;
+
+  set_T(T);
+  t = jcbi(N, T, &e, t0);
   fprintf(stderr, "%s-%d:\n", __func__, t);
   for(i = 0; i < N; ++i)
   {
