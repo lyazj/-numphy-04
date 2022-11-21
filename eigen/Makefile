@@ -4,6 +4,8 @@ include ../Makefile.conf
 
 # CFLAGS := $(subst -O3,-Og,$(CFLAGS))
 BIN := $(filter-out logging qr qrh qri qrih hhr qrig jcbi sgi,$(BIN))
+RUN += plot
+OUT += eigen-0.pdf eigen-1.pdf eigen-2.pdf eigen-3.pdf
 
 include ../Makefile.rule
 

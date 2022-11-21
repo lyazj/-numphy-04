@@ -28,7 +28,7 @@ int qri(int n, number A[n][n], number *e, int m)
       for(i = 0; i < n; ++i)
       {
         for(j = 0; j < n; ++j)
-          logging("%16lg", A[i][j]);
+          logging("%+25.13la", (double)A[i][j]);
         logging("\n");
       }
     }

@@ -1,0 +1,127 @@
+#!/usr/bin/env python3
+
+from atof import atof
+import re
+import numpy as np
+import matplotlib.pyplot as plt
+
+def f0(f, l, r):
+    fl = f(l)
+    if fl == 0:
+        return fl
+    fr = f(r)
+    if fr == 0:
+        return fr
+    if (fl < 0) == (fr < 0):
+        raise ValueError('same sign')
+    while True:
+        m = (l + r) / 2
+        if m == l or m == r:
+            return m
+        fm = f(m)
+        if fm == 0:
+            return m
+        if (fm < 0) == (fl < 0):
+            l = m
+            fl = fm
+        else:
+            r = m
+            fr = fm
+
+def f(x):
+    return x**4 + -10*x**3 + 32*x**2 - 35*x + 7
+
+# 4 exact eigenvalues
+v = np.array(list(map(lambda l, r: f0(f, l, r), *zip(
+    (0, 1), (1, 2), (3, 4), (4, 5)
+))))
+
+label_p = re.compile(r'^([^-:]*?)-([^-:]*?):$')
+
+def load(path):
+    data = {}
+    with open(path) as file:
+        for line in file:
+            label_m = label_p.search(line)
+            if label_m:
+                label, number = label_m.groups()
+            else:
+                d = data.get(label, {})
+                d[number] = d.get(number, []) + [line[:-1]]
+                data[label] = d
+    return data
+
+data = load('eigen.out')
+for label, record in data.items():
+    if label == 'sgi':
+        r = [{}, {}, {}, {}]
+        for number, (value,) in record.items():
+            number, index = re.compile(r'(\d+)\((\d+)\)').search(number).groups()
+            approx = re.compile(r'approx:\s+(\S+)').search(value).groups()[0]
+            r[int(index)][int(number)] = atof(approx)
+    else:
+        r = {}
+        for number, value in record.items():
+            r[int(number)] = np.array([
+                list(map(atof, l.split())) for l in value
+            ])
+    data[label] = r
+for label, record in data.items():
+    print(f'{label}:')
+    if label == 'sgi':
+        for i, r in enumerate(record):
+            print(f'{i}:')
+            print(r)
+    else:
+        for number, value in record.items():
+            print(f'{number}:')
+            print(value)
+    print()
+
+for label, record in data.items():
+    if label != 'sgi':
+        r = [{}, {}, {}, {}]
+        for number, value in record.items():
+            eigen = sorted(value[i,i] for i in range(4))
+            for i in range(4):
+                r[i][number] = eigen[i]
+        data[label] = r
+
+for label, record in data.items():
+    print(f'{label}:')
+    for i, r in enumerate(record):
+        print(f'{i}:')
+        print(r)
+    print()
+
+print(f'v: {v}')
+
+del data['qri']
+del data['qrih']
+data_new = [{}, {}, {}, {}]
+for label, record in data.items():
+    print(f'{label}:')
+    for i, r in enumerate(record):
+        d = np.array(list(r.items()))
+        d[:,1] = np.abs(d[:,1] - v[i])
+        print(d)
+        data_new[i][label] = d
+    print()
+data = data_new
+
+name = {
+    'qrig': 'QR (Givens)',
+    'jcbi': 'Jacobi',
+    'sgi' : 'Sturm',
+}
+
+for i in range(4):
+    plt.title(f'compute eigenvalue {i}')
+    plt.xlabel('iterations')
+    plt.ylabel('absolute error')
+    plt.yscale('log')
+    for label, value in data[i].items():
+        plt.plot(value[:,0], value[:,1], '.-', label=name[label])
+    plt.legend()
+    plt.savefig(f'eigen-{i}.pdf')
+    plt.show()

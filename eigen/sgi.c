@@ -67,7 +67,7 @@ int sgi(int n, number a[n], number b[n - 1], int c,
     if((t + 1) % 5 == 0)
     {
       logging("%s-%d(%d):\n", __func__, t + 1, c);
-      logging("approx: %16lg  err: %16lg\n",
+      logging("approx: %+25.13la  err: %+23.13la\n",
           (double)((l + u) / 2), (double)r);
     }
   }

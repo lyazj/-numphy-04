@@ -39,7 +39,7 @@ static void set_T(number T[N][N])
 static void engin_qri(void)
 {
   number T[N][N], e = 1e-10;
-  int t0 = 1000, t, i, j;
+  int t0 = 60, t, i, j;
 
   set_T(T);
   t = qri(N, T, &e, t0);
@@ -55,7 +55,7 @@ static void engin_qri(void)
 static void engin_qrih(void)
 {
   number T[N][N], e = 1e-10;
-  int t0 = 1000, t, i, j;
+  int t0 = 60, t, i, j;
 
   set_T(T);
   t = qrih(N, T, &e, t0);
@@ -71,7 +71,7 @@ static void engin_qrih(void)
 static void engin_qrig(void)
 {
   number T[N][N], e = 1e-10;
-  int t0 = 1000, t, i, j;
+  int t0 = 60, t, i, j;
 
   set_T(T);
   t = qrig(N, T, &e, t0);
@@ -87,7 +87,7 @@ static void engin_qrig(void)
 static void engin_jcbi(void)
 {
   number T[N][N], e = 1e-10;
-  int t0 = 1000, t, i, j;
+  int t0 = 60, t, i, j;
 
   set_T(T);
   t = jcbi(N, T, &e, t0);
@@ -103,7 +103,7 @@ static void engin_jcbi(void)
 static void engin_sturm(void)
 {
   number T[N][N];
-  int t0 = 1000, t[N], i, c;
+  int t0 = 60, t[N], i, c;
   number a[N], b[N - 1], l[N], u[N], e[N];
 
   set_T(T);
@@ -114,7 +114,7 @@ static void engin_sturm(void)
 
   for(c = 0; c < N; ++c)
   {
-    e[c] = 1e-10;
+    e[c] = NBR_EPSILON;
     t[c] = sgi(N, a, b, c, &l[c], &u[c], &e[c], t0);
   }
 
