@@ -27,7 +27,7 @@ for label, value in data.items():
         plt.xlabel('iterations')
         plt.ylabel('norm-2 error')
         plt.yscale(yscale)
-        plt.plot(range(1, 1 + len(value)), np.linalg.norm(value - x, 2, 1), '.-', label=label)
+        plt.plot(range(1, 1 + len(value)), np.linalg.norm(value - x, 2, 1), label=label)
         plt.legend()
         plt.savefig(f'{label}-{yscale}.pdf')
         plt.show()
