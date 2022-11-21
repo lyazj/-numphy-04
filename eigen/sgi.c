@@ -3,13 +3,13 @@
 
 static int sturm(int n, number a[n], number b[n - 1], number v)
 {
-  int sign;  // current sign
-  int c;     // sign alteration counter
+  _Bool sign;  // current sign (need C99+)
+  int c;       // sign alteration counter
   number p0, p1, p2;
   int i;
 
   p0 = 1;
-  sign = signbit(p0);
+  sign = signbit(p0);  // need C99+
   c = 0;
   p1 = a[0] - v;
   if(p1 == 0 || signbit(p1) != sign)
