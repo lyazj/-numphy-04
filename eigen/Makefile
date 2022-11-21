@@ -11,4 +11,5 @@ qr-test: qr.o
 qri-test: qr.o qri.o
 hhr-test: hhr.o qr.o qri.o
 qrig-test: qrig.o hhr.o qr.o qri.o
+eigen: qr.o qri.o qrig.o
 $(OBJ): defs.h
