@@ -3,7 +3,7 @@
 include ../Makefile.conf
 
 # CFLAGS := $(subst -O3,-Og,$(CFLAGS))
-BIN := $(filter-out logging qr qrh qri qrih hhr qrig jcbi,$(BIN))
+BIN := $(filter-out logging qr qrh qri qrih hhr qrig jcbi sgi,$(BIN))
 
 include ../Makefile.rule
 
@@ -17,4 +17,5 @@ qrih-test: qrh.o qrih.o
 hhr-test: hhr.o qr.o qri.o
 qrig-test: qrig.o hhr.o qr.o qri.o
 jcbi-test: jcbi.o qr.o qri.o
-eigen: qr.o qrh.o qri.o qrih.o qrig.o jcbi.o
+sgi-test: sgi.o
+eigen: qr.o qrh.o qri.o qrih.o qrig.o jcbi.o sgi.o

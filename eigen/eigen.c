@@ -9,6 +9,7 @@ static void engin_qri(void);
 static void engin_qrih(void);
 static void engin_qrig(void);
 static void engin_jcbi(void);
+static void engin_sturm(void);
 
 int main(void)
 {
@@ -17,6 +18,7 @@ int main(void)
   engin_qrih();
   engin_qrig();
   engin_jcbi();
+  engin_sturm();
   return 0;
 }
 
@@ -96,4 +98,28 @@ static void engin_jcbi(void)
       fprintf(stderr, "%16lg", (double)T[i][j]);
     fprintf(stderr, "\n");
   }
+}
+
+static void engin_sturm(void)
+{
+  number T[N][N];
+  int t0 = 1000, t[N], i, c;
+  number a[N], b[N - 1], l[N], u[N], e[N];
+
+  set_T(T);
+  for(i = 0; i < N; ++i)
+    a[i] = T[i][i];
+  for(i = 0; i < N - 1; ++i)
+    b[i] = T[i][i + 1];
+
+  for(c = 0; c < N; ++c)
+  {
+    e[c] = 1e-10;
+    t[c] = sgi(N, a, b, c, &l[c], &u[c], &e[c], t0);
+  }
+
+  fprintf(stderr, "%s:\n", __func__);
+  for(i = 0; i < N; ++i)
+    fprintf(stderr, "%4d it. %16lg  err: %lg\n",
+        t[i], (double)((l[i]+u[i])/2), e[i]);
 }
