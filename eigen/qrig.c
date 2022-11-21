@@ -40,6 +40,16 @@ int qrig(int n, number A[n][n], number *e, int m)
     }
     for(i = 0; i < j; ++i)
       r += fabs(A[i][j]);
+    if((t + 1) % 5 == 0)
+    {
+      logging("%s-%d:\n", __func__, t + 1);
+      for(i = 0; i < n; ++i)
+      {
+        for(j = 0; j < n; ++j)
+          logging("%16lg", A[i][j]);
+        logging("\n");
+      }
+    }
   }
   *e = r;
   return t;

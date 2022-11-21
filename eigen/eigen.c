@@ -10,6 +10,7 @@ static void engin_qrig(void);
 
 int main(void)
 {
+  logging_stream = stdout;
   engin_qri();
   engin_qrig();
   return 0;
@@ -31,32 +32,32 @@ static void set_T(number T[N][N])
 
 static void engin_qri(void)
 {
-  number T[N][N], e = NBR_EPSILON;
+  number T[N][N], e = 1e-7;
   int t0 = 1000, t, i, j;
 
   set_T(T);
   t = qri(N, T, &e, t0);
-  printf("%d\n", t);
+  fprintf(stderr, "%s-%d:\n", __func__, t);
   for(i = 0; i < N; ++i)
   {
     for(j = 0; j < N; ++j)
-      printf("%16lg", T[i][j]);
-    printf("\n");
+      fprintf(stderr, "%16lg", (double)T[i][j]);
+    fprintf(stderr, "\n");
   }
 }
 
 static void engin_qrig(void)
 {
-  number T[N][N], e = NBR_EPSILON;
+  number T[N][N], e = 1e-7;
   int t0 = 1000, t, i, j;
 
   set_T(T);
   t = qrig(N, T, &e, t0);
-  printf("%d\n", t);
+  fprintf(stderr, "%s-%d:\n", __func__, t);
   for(i = 0; i < N; ++i)
   {
     for(j = 0; j < N; ++j)
-      printf("%16lg", T[i][j]);
-    printf("\n");
+      fprintf(stderr, "%16lg", (double)T[i][j]);
+    fprintf(stderr, "\n");
   }
 }

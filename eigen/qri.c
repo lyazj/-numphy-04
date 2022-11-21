@@ -22,6 +22,16 @@ int qri(int n, number A[n][n], number *e, int m)
       for(j = 0; j < n; ++j)
         r = i == j ? r : r + fabs(A[i][j]);
     }
+    if((t + 1) % 5 == 0)
+    {
+      logging("%s-%d:\n", __func__, t + 1);
+      for(i = 0; i < n; ++i)
+      {
+        for(j = 0; j < n; ++j)
+          logging("%16lg", A[i][j]);
+        logging("\n");
+      }
+    }
   }
   *e = r;
   return t;
