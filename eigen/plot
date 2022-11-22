@@ -99,8 +99,8 @@ for label, record in data.items():
 
 print(f'v: {v}')
 
-del data['qri']
-del data['qrih']
+# del data['qri']
+# del data['qrih']
 data_new = [{}, {}, {}, {}]
 for label, record in data.items():
     print(f'{label}:')
@@ -113,6 +113,8 @@ for label, record in data.items():
 data = data_new
 
 name = {
+    'qri' : 'QR (Gram-Schmidt)',
+    'qrih': 'QR (Householder)',
     'qrig': 'QR (Givens)',
     'jcbi': 'Jacobi',
     'sgi' : 'Sturm',
