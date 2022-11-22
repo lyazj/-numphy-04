@@ -36,12 +36,15 @@ v = np.array(list(map(lambda l, r: f0(f, l, r), *zip(
     (0, 1), (1, 2), (3, 4), (4, 5)
 ))))
 
+comment_p = re.compile(r'^\s*#\s*(.*)$')
 label_p = re.compile(r'^([^-:]*?)-([^-:]*?):$')
 
 def load(path):
     data = {}
     with open(path) as file:
         for line in file:
+            if comment_p.search(line):
+                continue
             label_m = label_p.search(line)
             if label_m:
                 label, number = label_m.groups()

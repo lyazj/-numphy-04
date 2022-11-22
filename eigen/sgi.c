@@ -53,6 +53,7 @@ int sgi(int n, number a[n], number b[n - 1], int c,
     l = l0 < l ? l0 : l;
     u = u0 > u ? u0 : u;
   }
+  logging("# sgi(%d): [%lg, %lg]\n", c, l, u);
   r = u - l;
 
   for(t = 0; t < m && r >= e0; ++t)
