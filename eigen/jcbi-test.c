@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 static void qrig_test(void);
-static int number_lt(number *a, number *b);
+static int number_cmp(number *a, number *b);
 
 int main(void)
 {
@@ -53,15 +53,16 @@ void qrig_test(void)
 
   for(i = 0; i < n; ++i)
     l0[i] = A0[i][i];
-  qsort(l0, n, sizeof(number), (void *)number_lt);
+  qsort(l0, n, sizeof(number), (void *)number_cmp);
   for(i = 0; i < n; ++i)
     l[i] = A[i][i];
-  qsort(l, n, sizeof(number), (void *)number_lt);
+  qsort(l, n, sizeof(number), (void *)number_cmp);
   for(i = 0; i < n; ++i)
     assert(fabs(l[i] - l0[i]) < 1e-10);
 }
 
-int number_lt(number *a, number *b)
+int number_cmp(number *ap, number *bp)
 {
-  return *a < *b;
+  number a = *ap, b = *bp;
+  return a < b ? -1 : a > b ? 1 : 0;
 }
