@@ -14,4 +14,4 @@ cg-test: cg.o
 solve-cg: cg.o
 gd-test: gd.o
 solve-gd: gd.o
-plot: solve-gd.out solve-cg.out
+plot.run: solve-gd.out solve-cg.out

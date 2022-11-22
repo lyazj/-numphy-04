@@ -21,3 +21,4 @@ qrig-test: qrig.o hhr.o qr.o qri.o
 jcbi-test: jcbi.o qr.o qri.o
 sgi-test: sgi.o
 eigen: qr.o qrh.o qri.o qrih.o qrig.o jcbi.o sgi.o
+plot.run: eigen.out
