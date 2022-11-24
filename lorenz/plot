@@ -49,4 +49,5 @@ plt.plot(data[:,0], data[:,1], data[:,2], label=\
     f',\\ \\sigma={SIGMA},\\ \\rho={RHO},\\ \\beta={BETA}'
     f',\\ y(0)=({Y10}, {Y20}, {Y30})$')
 plt.legend(loc='upper center')
+plt.savefig('lorenz.pdf')
 plt.show()
