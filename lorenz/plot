@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+
+import re
+import numpy as np
+import matplotlib.pyplot as plt
+
+def get_macro(source, name):
+    m = re.search(r'^#define\s+' + re.escape(name) + r'\s+(.*)$', source, re.M)
+    if not m:
+        return
+    m = m.groups()[0]
+    return m
+
+def get_arg(source, name):
+    m = get_macro(source, name)
+    if not m:
+        return
+    m = re.match(r'\(\(number\)(.*)\)', m)
+    if not m:
+        return
+    m = m.groups()[0]
+    try:
+        m = '%g' % float(eval(m))
+    except Exception:
+        return
+    return m
+
+with open('lorenz.c') as f:
+    source = f.read()
+SIGMA = get_arg(source, 'SIGMA')
+RHO = get_arg(source, 'RHO')
+BETA = get_arg(source, 'BETA')
+T0 = get_arg(source, 'T0')
+TN = get_arg(source, 'TN')
+N = get_macro(source, 'N')
+Y10 = get_arg(source, 'Y10')
+Y20 = get_arg(source, 'Y20')
+Y30 = get_arg(source, 'Y30')
+with open('lorenz.out') as f:
+    data = np.array([
+        list(map(float, l.split())) for l in f
+    ])
+print(data)
+
+ax = plt.axes(projection='3d')
+ax.set(title='Lorenz absorber curve', xlabel='y1', ylabel='y2', zlabel='y3')
+plt.plot(data[:,0], data[:,1], data[:,2], label=\
+    f'${T0} \\leq t \\leq {TN},\\ n={N}'
+    f',\\ \\sigma={SIGMA},\\ \\rho={RHO},\\ \\beta={BETA}'
+    f',\\ y(0)=({Y10}, {Y20}, {Y30})$')
+plt.legend(loc='upper center')
+plt.show()
