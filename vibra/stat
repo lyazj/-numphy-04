@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ -z "$N" ]; then
+    N=1000
+fi
+
+for i in `seq $N`; do
+    r=$(./vibra 3>&1 1>/dev/null 2>&3 | egrep '\[[0-9]+\]')
+    echo ${r:1:-1}
+done
