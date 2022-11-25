@@ -28,10 +28,11 @@ void set_A(number A[N][N])
 void rand_q(number q[N])
 {
   int i;
-  number q2 = 0;
+  number q2;
 
   srand(getpid());
 again:
+  q2 = 0;
   for(i = 0; i < N; ++i)
   {
     q[i] = (signed char)rand();
@@ -71,10 +72,11 @@ double rmse(number a[N], number b[N])
 int main(void)
 {
   number A[N][N], q[N], c, q_new[N], c_new, q1, q2;
+  int i, j, t = 0;
+
   set_A(A);
   rand_q(q_new);
   c_new = get_c(A, q_new);
-  int i, j, t = 0;
 
   do {
     for(i = 0; i < N; ++i)
